@@ -10,7 +10,7 @@
 @endsection
 
 @section('content')
-<form method="POST" action="{{ Route('tasks.update', ['id'=> $task->id]) }}">
+<form method="POST" action="{{ Route('tasks.update', ['task'=> $task->id]) }}">
     @csrf
      @method('PUT')   {{--Add a data properties tha will be sent with the form--}} 
     <div>

@@ -19,7 +19,7 @@
             @forelse ($tasks as $task)
                 <tr>
                     <td>
-                        <a href="{{ route('tasks.show', ['id' => $task->id]) }}">{{ $task->description }}</a>
+                        <a href="{{ route('tasks.show', ['task' => $task->id]) }}">{{ $task->description }}</a>
                     </td>
                     <td>{{ $task->description }}</td>
                     <td>{{ $task->long_description ?: 'no long description' }}</td>
