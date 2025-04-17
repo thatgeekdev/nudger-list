@@ -17,4 +17,8 @@ class Task extends Model
 
     protected $fillable = ['title', 'description', 'long_description', 'completed'];
 
+    public function toggleCompleted()
+    {
+        $this->update(['completed' => !$this->completed]);
+    }
 }
