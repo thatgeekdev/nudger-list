@@ -1,23 +1,43 @@
-/.phpunit.cache
-/node_modules
-/public/build
-/public/hot
-/public/storage
-/storage/*.key
-/storage/pail
+# Laravel default
 /vendor
+/node_modules
+/public/storage
+/storage
+/bootstrap/cache
+
+# Laravel environment files
 .env
-.env.backup
-.env.production
-.phpactor.json
+.env.*
+!.env.example
+
+# Laravel build files
+/public/hot
+/public/build
+/public/mix-manifest.json
+
+# Laravel test & debug
 .phpunit.result.cache
+/.phpunit.cache
+/storage/*.key
+/storage/debugbar/
+
+# IDEs & tools
+/.idea
+/.vscode
+/.fleet
+/.nova
+/.zed
+.phpactor.json
+
+# OS & log files
+npm-debug.log*
+yarn-error.log*
+auth.json
+
+# Homestead
 Homestead.json
 Homestead.yaml
-npm-debug.log
-yarn-error.log
-/auth.json
-/.fleet
-/.idea
-/.nova
-/.vscode
-/.zed
+
+# Other env or backups
+.env.backup
+.env.production
