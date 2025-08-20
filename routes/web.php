@@ -1,56 +1,32 @@
 <?php
 
-use App\Http\Requests\TaskRequest;
-use App\Models\Task;
-use Illuminate\Http\Response;
+
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ApiConsumer\TaskApiController;
 
 
 Route::get('/', function () {
-    return redirect()->route('tasks.index');
-});
-Route::get('/tasks', function () {
-    return view('index', [
-        'tasks' => Task::latest()->paginate(7)
-    ]);
-})->name('tasks.index');
-
-Route::view('/tasks/create', 'create')->name('tasks.create');
-
-Route::post('/tasks', function (TaskRequest $request) {
-    $task = Task::create($request->validated());
-    return redirect()->route('tasks.show', ['task' => $task->id])
-        ->with('success', 'Task created succesfully');
-})->name('tasks.store');
-
-Route::get('/tasks/{task}', function (Task $task) {
-    return view('show', ['task' => $task]);
-})->name('tasks.show');
-
-Route::get('/tasks/{task}/edit', function (Task $task) {
-    return view('edit', [
-        'task' => $task
-    ]);
-})->name('tasks.edit');
-
-Route::put('/tasks/{task}', function (Task $task, TaskRequest $request) {
-    $task->update($request->validated());
-    return redirect()->route('tasks.show', ['task' => $task->id])->with('success', 'Task updated succesfully');
-})->name('tasks.update');
-
-Route::delete('/tasks/{task}', function (Task $task) {
-    $task->delete();
-
-    return redirect()->route('tasks.index')
-        ->with('success', 'Task deleted successfully');
-})->name('tasks.destroy');
-
-Route::fallback(function () {
-    return abort(Response::HTTP_NOT_FOUND);
+    return redirect()->route('login.form');
 });
 
-Route::put('/tasks/{task}/complete', function (Task $task) {
-    $task->toggleCompleted();
+Route::get('/login', [TaskApiController::class, 'loginForm'])->name('login.form');
+Route::post('/login', [TaskApiController::class, 'login'])->name('login');
+Route::post('/logout', [TaskApiController::class, 'logout'])->name('logout');
 
-    return redirect()->back()->with('success', 'Task completed successfully');
-})->name('tasks.complete');
+Route::middleware('web')->group(function () {
+    Route::get('/tasks', [TaskApiController::class, 'index'])->name('tasks.index');
+    Route::get('/tasks/create', [TaskApiController::class, 'create'])->name('tasks.create');
+    Route::post('/tasks', [TaskApiController::class, 'store'])->name('tasks.store');
+    Route::get('/tasks/{id}', [TaskApiController::class, 'show'])->name('tasks.show');
+    Route::get('/tasks/{id}/edit', [TaskApiController::class, 'edit'])->name('tasks.edit');
+    Route::put('/tasks/{id}', [TaskApiController::class, 'update'])->name('tasks.update');
+    Route::delete('/tasks/{id}', [TaskApiController::class, 'destroy'])->name('tasks.destroy');
+    // Search and filtering
+    Route::get('/tasks/status/{status}', [TaskApiController::class, 'filterByStatus'])->name('tasks.filter');
+    Route::get('/tasks/search', [TaskApiController::class, 'search'])->name('tasks.search');
+
+    // Trash management
+    Route::get('/tasks/trashed', [TaskApiController::class, 'trashed'])->name('tasks.trashed');
+    Route::patch('/tasks/{id}/restore', [TaskApiController::class, 'restore'])->name('tasks.restore');
+    Route::delete('/tasks/{id}/force', [TaskApiController::class, 'forceDelete'])->name('tasks.forceDelete');
+});

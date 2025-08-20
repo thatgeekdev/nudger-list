@@ -11,21 +11,21 @@
 @endsection
 
 @section('content')
-<form method="POST" action="{{ isset($task) ? Route('tasks.update', ['task'=> $task->id]) : Route('tasks.store') }}" class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md">
+<form method="POST" action="{{ isset($task) ? Route('tasks.update', ['id'=> $task['id']]) : Route('tasks.store') }}" class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md">
     @csrf
     @isset($task)
     @method('PUT')
     @endisset
     <div class="mb-4">
         <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
-        <input type="text" name="title" id="title" value="{{ $task->title ?? old('title') }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+        <input type="text" name="title" id="title" value="{{ $task['title'] ?? old('title') }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
         @error('title')
         <p class="error-message mt-1 text-sm text-red-600">{{ $message }}</p>
         @enderror
     </div>
     <div class="mb-4">
         <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
-        <input type="text" name="description" id="description" value="{{ $task->description ?? old('description') }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+        <input type="text" name="description" id="description" value="{{ $task['description'] ?? old('description') }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
         @error('description')
         <p class="error-message mt-1 text-sm text-red-600">{{ $message }}</p>
         @enderror

@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'nudger_api' => [
+        'base_uri' => env('API_URL'),
+    ],
+
 ];

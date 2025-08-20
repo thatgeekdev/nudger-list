@@ -11,9 +11,10 @@
             ← Go back to the task list
         </a>
     </div>
+    
     <li class="border-b border-gray-200 flex items-center justify-between py-4">
         <label class="flex items-center">
-            <form action="{{ route('tasks.complete', ['task' => $task]) }}" method="POST">
+            <form action="{{ route('tasks.filter', ['task' => $task]) }}" method="POST">
                 @csrf
                 @method('PUT')
                 <input type="checkbox" onchange="this.form.submit()" {{ $task->completed ? 'checked' : '' }}
